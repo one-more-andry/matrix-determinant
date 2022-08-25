@@ -28,10 +28,21 @@ public class App {
      */
     public static int determinant(int[][] matrix) throws IllegalArgumentException {
         validateInput(matrix);
+        int determinant;
 
-        return 0;
+        switch (matrix.length) {
+            case 1:
+                determinant = matrix[0][0];
+                break;
+            case 2:
+                determinant = calculateN2Matrix(matrix);
+                break;
+            default:
+                determinant = calculateComplexMatrix(matrix);
+        }
+
+        return determinant;
     }
-
 
     private static void validateInput(int[][] matrix) throws IllegalArgumentException {
         if (matrix == null) {
@@ -48,5 +59,13 @@ public class App {
                 throw new IllegalArgumentException(INVALID_MATRIX_PROPORTION_EXCEPTION_MESSAGE);
             }
         });
+    }
+
+    private static int calculateComplexMatrix(int[][] matrix) {
+        return 0;
+    }
+
+    private static int calculateN2Matrix(int[][] matrix) {
+        return (matrix[0][0] * matrix[1][1]) - (matrix[0][1] * matrix[1][0]);
     }
 }
