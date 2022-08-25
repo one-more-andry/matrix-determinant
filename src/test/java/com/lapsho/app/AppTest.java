@@ -51,6 +51,26 @@ public class AppTest {
     }
 
     @Test
+    public void determinant_N1_ShouldPass()
+    {
+        int[][] input = {{1}};
+        int expectedOutput = 1;
+        int output = App.determinant(input);
+
+        assertEquals("Invalid determinant calculation: ", expectedOutput, output);
+    }
+
+    @Test
+    public void determinant_N2_ShouldPass()
+    {
+        int[][] input = {{2, 3}, {1, 1}};
+        int expectedOutput = -1;
+        int output = App.determinant(input);
+
+        assertEquals("Invalid determinant calculation: ", expectedOutput, output);
+    }
+
+    @Test
     public void determinant_N4NegativeAndZeroAndNaturalNumbers_ShouldPass() {
         int[][] input = {{1, 0, 2, -1},
                 {3, 0, 0, 5},
