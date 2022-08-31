@@ -1,6 +1,8 @@
 package com.lapsho.app;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Hello world!
@@ -61,11 +63,65 @@ public class App {
         });
     }
 
-    private static int calculateComplexMatrix(int[][] matrix) {
-        return 0;
-    }
-
     private static int calculateN2Matrix(int[][] matrix) {
         return (matrix[0][0] * matrix[1][1]) - (matrix[0][1] * matrix[1][0]);
     }
+
+    private static int calculateComplexMatrix(int[][] matrix) {
+         int i = 0, determinant = 0;
+         List<Integer> determinants = new ArrayList();
+
+        while (i < matrix[0].length) {
+            determinants.add(matrix[0][i] * determinant(extractMinorMatrix(matrix, i)));
+            i++;
+        }
+        i = 0;
+
+        while (i < determinants.size()) {
+            if (i == 0) {
+                determinant = determinants.get(i);
+
+            } else if (i % 2 == 0) {
+                determinant += determinants.get(i);
+
+            } else {
+                determinant -= determinants.get(i);
+            }
+
+            i++;
+        }
+
+        return determinant;
+    }
+
+    private static int[][] extractMinorMatrix(int[][] matrix, int columnIndex) {
+        if (matrix.length < 3) {
+            return matrix;
+        }
+
+        int limit = matrix.length - 1;
+        int[][] minorMatrix = new int[limit][limit];
+
+        for (int i = 1; i <= limit; i++) {
+            int[] rowSequence = new int[limit];
+
+            if (i == 0) {
+                rowSequence = Arrays.copyOfRange(matrix[i], 1, matrix[i].length);
+
+            } else if (i == matrix.length) {
+                rowSequence = Arrays.copyOfRange(matrix[i], 0, matrix[i].length - 1);
+
+            } else {
+                int[] pre = Arrays.copyOfRange(matrix[i], 0, columnIndex);
+                System.arraycopy(pre, 0, rowSequence, 0, pre.length);
+                int[] post = Arrays.copyOfRange(matrix[i], columnIndex + 1, matrix[i].length);
+                System.arraycopy(post, 0, rowSequence, pre.length, post.length);
+            }
+
+            minorMatrix[i - 1] = rowSequence;
+        }
+
+        return minorMatrix;
+    }
 }
+
