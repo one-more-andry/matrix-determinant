@@ -68,24 +68,19 @@ public class App {
     }
 
     private static int calculateComplexMatrix(int[][] matrix) {
-         int i = 0, determinant = 0;
-         List<Integer> determinants = new ArrayList();
+        int i = 0, determinant = 0;
 
         while (i < matrix[0].length) {
-            determinants.add(matrix[0][i] * determinant(extractMinorMatrix(matrix, i)));
-            i++;
-        }
-        i = 0;
+            int subDeterminant = matrix[0][i] * determinant(extractMinorMatrix(matrix, i));
 
-        while (i < determinants.size()) {
             if (i == 0) {
-                determinant = determinants.get(i);
+                determinant = subDeterminant;
 
             } else if (i % 2 == 0) {
-                determinant += determinants.get(i);
+                determinant += subDeterminant;
 
             } else {
-                determinant -= determinants.get(i);
+                determinant -= subDeterminant;
             }
 
             i++;
